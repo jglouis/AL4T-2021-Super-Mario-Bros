@@ -18,21 +18,82 @@ public class Map {
 
     private double remainingTime;
     private Mario mario;
-    private ArrayList<Brick> bricks = new ArrayList<>();
-    private ArrayList<Enemy> enemies = new ArrayList<>();
-    private ArrayList<Brick> groundBricks = new ArrayList<>();
-    private ArrayList<Prize> revealedPrizes = new ArrayList<>();
-    private ArrayList<Brick> revealedBricks = new ArrayList<>();
-    private ArrayList<Fireball> fireballs = new ArrayList<>();
+    private final ArrayList<Brick> bricks = new ArrayList<>();
+    private final ArrayList<Enemy> enemies = new ArrayList<>();
+    private final ArrayList<Brick> groundBricks = new ArrayList<>();
+    private final ArrayList<Prize> revealedPrizes = new ArrayList<>();
+    private final ArrayList<Brick> revealedBricks = new ArrayList<>();
+    private final ArrayList<Fireball> fireballs = new ArrayList<>();
     private EndFlag endPoint;
-    private BufferedImage backgroundImage;
-    private double bottomBorder = 720 - 96;
+    private final BufferedImage backgroundImage;
     private String path;
 
 
-    public Map(double remainingTime, BufferedImage backgroundImage) {
+    private Map(double remainingTime, BufferedImage backgroundImage) {
         this.backgroundImage = backgroundImage;
         this.remainingTime = remainingTime;
+    }
+
+    public static class Builder {
+        private double remainingTime;
+        private Mario mario;
+        private final ArrayList<Brick> bricks = new ArrayList<>();
+        private final ArrayList<Enemy> enemies = new ArrayList<>();
+        private final ArrayList<Brick> groundBricks = new ArrayList<>();
+        private EndFlag endPoint;
+        private BufferedImage backgroundImage;
+        private String path;
+
+        public Builder setRemainingTime(double remainingTime) {
+            this.remainingTime = remainingTime;
+            return this;
+        }
+
+        public Builder setBackgroundImage(BufferedImage backgroundImage) {
+            this.backgroundImage = backgroundImage;
+            return this;
+        }
+
+        public Builder addBrick(Brick brick) {
+            bricks.add(brick);
+            return this;
+        }
+
+        public Builder addGroundBrick(Brick brick) {
+            groundBricks.add(brick);
+            return this;
+        }
+
+        public Builder addEnemy(Enemy enemy) {
+            enemies.add(enemy);
+            return this;
+        }
+
+        public Builder setMario(Mario mario) {
+            this.mario = mario;
+            return this;
+        }
+
+        public Builder setEndPoint(EndFlag endPoint) {
+            this.endPoint = endPoint;
+            return this;
+        }
+
+        public Builder setPath(String path) {
+            this.path = path;
+            return this;
+        }
+
+        public Map build() {
+            Map map = new Map(remainingTime, backgroundImage);
+            map.setMario(mario);
+            map.setEndPoint(endPoint);
+            map.setPath(path);
+            map.bricks.addAll(bricks);
+            map.groundBricks.addAll(groundBricks);
+            map.enemies.addAll(enemies);
+            return map;
+        }
     }
 
 
@@ -166,7 +227,7 @@ public class Map {
     }
 
     public double getBottomBorder() {
-        return bottomBorder;
+        return 720 - 96;
     }
 
     public void addRevealedPrize(Prize prize) {

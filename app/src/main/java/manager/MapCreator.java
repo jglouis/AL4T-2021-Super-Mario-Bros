@@ -52,9 +52,13 @@ class MapCreator {
             return null;
         }
 
-        Map createdMap = new Map(timeLimit, backgroundImage);
+//        Map createdMap = new Map(timeLimit, backgroundImage);
         String[] paths = mapPath.split("/");
-        createdMap.setPath(paths[paths.length - 1]);
+        Map.Builder mapBuilder = new Map.Builder()
+                .setPath(paths[paths.length - 1])
+                .setRemainingTime(timeLimit)
+                .setBackgroundImage(backgroundImage);
+
 
         int pixelMultiplier = 48;
 
@@ -76,35 +80,35 @@ class MapCreator {
 
                 if (currentPixel == ordinaryBrick) {
                     Brick brick = new OrdinaryBrick(xLocation, yLocation, this.ordinaryBrick);
-                    createdMap.addBrick(brick);
+                    mapBuilder.addBrick(brick);
                 } else if (currentPixel == surpriseBrick) {
                     Prize prize = generateRandomPrize(xLocation, yLocation);
                     Brick brick = new SurpriseBrick(xLocation, yLocation, this.surpriseBrick, prize);
-                    createdMap.addBrick(brick);
+                    mapBuilder.addBrick(brick);
                 } else if (currentPixel == pipe) {
                     Brick brick = new Pipe(xLocation, yLocation, this.pipe);
-                    createdMap.addGroundBrick(brick);
+                    mapBuilder.addGroundBrick(brick);
                 } else if (currentPixel == groundBrick) {
                     Brick brick = new GroundBrick(xLocation, yLocation, this.groundBrick);
-                    createdMap.addGroundBrick(brick);
+                    mapBuilder.addGroundBrick(brick);
                 } else if (currentPixel == goomba) {
                     Enemy enemy = enemyFactory.create(EnemyType.GOOMBA, xLocation, yLocation, difficultySettings);
-                    createdMap.addEnemy(enemy);
+                    mapBuilder.addEnemy(enemy);
                 } else if (currentPixel == koopa) {
                     Enemy enemy = enemyFactory.create(EnemyType.KOOPA_TROOPA, xLocation, yLocation, difficultySettings);
-                    createdMap.addEnemy(enemy);
+                    mapBuilder.addEnemy(enemy);
                 } else if (currentPixel == mario) {
                     Mario marioObject = new Mario(xLocation, yLocation);
-                    createdMap.setMario(marioObject);
+                    mapBuilder.setMario(marioObject);
                 } else if (currentPixel == end) {
                     EndFlag endPoint = new EndFlag(xLocation + 24, yLocation, endFlag);
-                    createdMap.setEndPoint(endPoint);
+                    mapBuilder.setEndPoint(endPoint);
                 }
             }
         }
 
         System.out.println("Map is created..");
-        return createdMap;
+        return mapBuilder.build();
     }
 
     private Prize generateRandomPrize(double x, double y) {
