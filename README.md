@@ -7,7 +7,7 @@ Classic Super Mario Bros. game implemented with Java for CS319-Object-Oriented S
 You can visit [wikipedia page](https://en.wikipedia.org/wiki/Super_Mario_Bros.) or [Super Mario wiki page](https://www.mariowiki.com/Super_Mario_Bros.) for detailed information about the game.
 
 ## Built With
-* [Java](https://www.java.com/)
+* [Java](https://www.java.com/) and Gradle. Just call ./gradlew run to run and ./gradlew build to build.
 
 ## In-game Screens
 
