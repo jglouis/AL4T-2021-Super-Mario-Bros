@@ -6,12 +6,22 @@ import javax.sound.sampled.Clip;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
+
 public class SoundManager {
+
+
+    private static class LazyHolder {
+        static SoundManager INSTANCE = new SoundManager();
+    }
+
+    public static SoundManager getInstance() {
+        return LazyHolder.INSTANCE;
+    }
 
     private Clip background;
     private long clipTime = 0;
 
-    public SoundManager() {
+    private SoundManager() {
         background = getClip(loadAudio("background"));
     }
 
