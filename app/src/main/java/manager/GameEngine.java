@@ -1,5 +1,8 @@
 package manager;
 
+import model.MarioJump;
+import model.MarioMoveLeft;
+import model.MarioMoveRight;
 import model.hero.Mario;
 import view.ImageLoader;
 import view.StartScreenSelection;
@@ -198,11 +201,12 @@ public class GameEngine implements Runnable {
         } else if (gameStatus == GameStatus.RUNNING) {
             Mario mario = mapManager.getMario();
             if (input == ButtonAction.JUMP) {
-                mario.jump(this);
+                new MarioJump(this, mario).execute();
             } else if (input == ButtonAction.M_RIGHT) {
-                mario.move(true, camera);
+                new MarioMoveRight(mario, camera).execute();
             } else if (input == ButtonAction.M_LEFT) {
-                mario.move(false, camera);
+                new MarioMoveLeft(mario, camera).execute();
+                ;
             } else if (input == ButtonAction.ACTION_COMPLETED) {
                 mario.setVelX(0);
             } else if (input == ButtonAction.FIRE) {
