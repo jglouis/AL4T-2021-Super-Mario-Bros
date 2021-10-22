@@ -4,6 +4,10 @@ import be.ecam.builder.StringBuilderScenario;
 import be.ecam.card.Card;
 import be.ecam.card.Deck;
 import be.ecam.card.Suit;
+import be.ecam.closure.ClosureKt;
+import be.ecam.lambda.NaiveClosure;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,16 @@ public class Main {
         }
 
         new StringBuilderScenario().run();
+
+
+        Runnable counter = NaiveClosure.getCounter();
+        counter.run();
+        counter.run();
+        counter.run();
+        counter.run();
+
+        Function0<Unit> counter1 = ClosureKt.getCounter();
+        counter1.invoke();
 
     }
 
