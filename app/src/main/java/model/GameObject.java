@@ -1,9 +1,11 @@
 package model;
 
+import view.AwtDrawable;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class GameObject {
+public abstract class GameObject implements AwtDrawable {
 
     private double x, y;
 

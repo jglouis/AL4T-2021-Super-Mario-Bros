@@ -8,6 +8,7 @@ import model.hero.Mario;
 import model.prize.BoostItem;
 import model.prize.Coin;
 import model.prize.Prize;
+import view.AwtDrawableDebugDecorator;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -188,7 +189,7 @@ public class Map {
     }
 
     private void drawMario(Graphics2D g2) {
-        mario.draw(g2);
+        new AwtDrawableDebugDecorator(mario).draw(g2);
     }
 
     public void updateLocations() {
