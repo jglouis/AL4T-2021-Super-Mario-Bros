@@ -4,23 +4,34 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.WeakHashMap;
 
 
-public class InputManager implements KeyListener, MouseListener{
+public class InputManager implements KeyListener, MouseListener {
 
     private GameEngine engine;
+    private final WeakHashMap<KeyListener, Void> listeners = new WeakHashMap<>();
 
     InputManager(GameEngine engine) {
-        this.engine = engine; }
+        this.engine = engine;
+    }
+
+    public void registerKeyListener(KeyListener listener) {
+        listeners.put(listener, null);
+    }
 
     @Override
     public void keyPressed(KeyEvent event) {
+        listeners.keySet().forEach(listener -> listener.keyPressed(event));
         int keyCode = event.getKeyCode();
         GameStatus status = engine.getGameStatus();
         ButtonAction currentAction = ButtonAction.NO_ACTION;
 
         if (keyCode == KeyEvent.VK_UP) {
-            if(status == GameStatus.START_SCREEN || status == GameStatus.MAP_SELECTION)
+            if (status == GameStatus.START_SCREEN || status == GameStatus.MAP_SELECTION)
                 currentAction = ButtonAction.GO_UP;
             else
                 currentAction = ButtonAction.JUMP;
