@@ -1,5 +1,6 @@
 package be.ecam;
 
+import be.ecam.builder.StringBuilderScenario;
 import be.ecam.card.Card;
 import be.ecam.card.Deck;
 import be.ecam.card.Suit;
@@ -37,6 +38,9 @@ public class Main {
         } catch (Deck.NoMoreCardException e) {
             System.out.println(e.getMessage());
         }
+
+        new StringBuilderScenario().run();
+
     }
 
 }
