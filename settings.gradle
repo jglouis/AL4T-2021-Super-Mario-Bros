@@ -9,3 +9,4 @@
 
 rootProject.name = 'AL4T-2021-Super-Mario-Bros'
 include('app')
+include('deckmanager')
