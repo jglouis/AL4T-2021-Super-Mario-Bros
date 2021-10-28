@@ -1,15 +1,15 @@
 package manager;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
-
+@Singleton
 public class SoundManager {
-
-
     private static class LazyHolder {
         static SoundManager INSTANCE = new SoundManager();
     }
@@ -21,7 +21,8 @@ public class SoundManager {
     private Clip background;
     private long clipTime = 0;
 
-    private SoundManager() {
+    @Inject
+    public SoundManager() {
         background = getClip(loadAudio("background"));
     }
 

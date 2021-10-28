@@ -1,5 +1,7 @@
 package manager;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -9,12 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.WeakHashMap;
 
-
+@Singleton
 public class InputManager implements KeyListener, MouseListener {
 
     private GameEngine engine;
     private final WeakHashMap<KeyListener, Void> listeners = new WeakHashMap<>();
 
+    @Inject
     InputManager(GameEngine engine) {
         this.engine = engine;
     }

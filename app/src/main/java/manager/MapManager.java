@@ -12,13 +12,17 @@ import model.prize.Coin;
 import model.prize.Prize;
 import view.ImageLoader;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.*;
 import java.util.ArrayList;
 
+@Singleton
 public class MapManager {
 
     private Map map;
 
+    @Inject
     public MapManager() {}
 
     public void updateLocations() {
@@ -84,8 +88,7 @@ public class MapManager {
             map.getEndPoint().setTouched(true);
             int height = (int)getMario().getY();
             return height * 2;
-        }
-        else
+        } else
             return -1;
     }
 
@@ -355,11 +358,9 @@ public class MapManager {
         for(GameObject object : list){
             if(object instanceof Fireball){
                 map.removeFireball((Fireball)object);
-            }
-            else if(object instanceof Enemy){
+            } else if(object instanceof Enemy){
                 map.removeEnemy((Enemy)object);
-            }
-            else if(object instanceof Coin || object instanceof BoostItem){
+            } else if(object instanceof Coin || object instanceof BoostItem){
                 map.removePrize((Prize)object);
             }
         }
