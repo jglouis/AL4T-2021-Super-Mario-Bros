@@ -5,38 +5,17 @@ import javax.inject.Singleton;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import java.io.BufferedInputStream;
-import java.io.InputStream;
 
 @Singleton
 public class SoundManager {
-    private static class LazyHolder {
-        static SoundManager INSTANCE = new SoundManager();
-    }
-
-    public static SoundManager getInstance() {
-        return LazyHolder.INSTANCE;
-    }
-
     private Clip background;
     private long clipTime = 0;
+    private final AudioLoader loader;
 
     @Inject
-    public SoundManager() {
-        background = getClip(loadAudio("background"));
-    }
-
-    private AudioInputStream loadAudio(String url) {
-        try {
-            InputStream audioSrc = getClass().getResourceAsStream("/media/audio/" + url + ".wav");
-            InputStream bufferedIn = new BufferedInputStream(audioSrc);
-            return AudioSystem.getAudioInputStream(bufferedIn);
-
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-
-        return null;
+    public SoundManager(AudioLoader loader) {
+        this.loader = loader;
+        background = getClip(loader.loadAudio("background"));
     }
 
     private Clip getClip(AudioInputStream stream) {
@@ -67,53 +46,49 @@ public class SoundManager {
     }
 
     public void playJump() {
-        Clip clip = getClip(loadAudio("jump"));
+        Clip clip = getClip(loader.loadAudio("jump"));
         clip.start();
 
     }
 
     public void playCoin() {
-        Clip clip = getClip(loadAudio("coin"));
+        Clip clip = getClip(loader.loadAudio("coin"));
         clip.start();
 
     }
 
     public void playFireball() {
-        Clip clip = getClip(loadAudio("fireball"));
+        Clip clip = getClip(loader.loadAudio("fireball"));
         clip.start();
 
     }
 
     public void playGameOver() {
-        Clip clip = getClip(loadAudio("gameOver"));
+        Clip clip = getClip(loader.loadAudio("gameOver"));
         clip.start();
 
     }
 
     public void playStomp() {
-        Clip clip = getClip(loadAudio("stomp"));
+        Clip clip = getClip(loader.loadAudio("stomp"));
         clip.start();
 
     }
 
     public void playOneUp() {
-        Clip clip = getClip(loadAudio("oneUp"));
+        Clip clip = getClip(loader.loadAudio("oneUp"));
         clip.start();
 
     }
 
     public void playSuperMushroom() {
-
-        Clip clip = getClip(loadAudio("superMushroom"));
+        Clip clip = getClip(loader.loadAudio("superMushroom"));
         clip.start();
-
     }
 
     public void playMarioDies() {
-
-        Clip clip = getClip(loadAudio("marioDies"));
+        Clip clip = getClip(loader.loadAudio("marioDies"));
         clip.start();
-
     }
 
     public void playFireFlower() {
