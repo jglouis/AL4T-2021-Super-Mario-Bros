@@ -10,23 +10,22 @@ import javax.inject.Singleton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 @Singleton
 public class UIManager extends JPanel {
 
-    private GameEngine engine;
+    private final GameEngine engine;
     private Font gameFont;
-    private BufferedImage startScreenImage, aboutScreenImage, helpScreenImage, gameOverScreen;
-    private BufferedImage heartIcon;
-    private BufferedImage coinIcon;
-    private BufferedImage selectIcon;
-    private MapSelection mapSelection;
+    private final BufferedImage startScreenImage, aboutScreenImage, helpScreenImage, gameOverScreen;
+    private final BufferedImage heartIcon;
+    private final BufferedImage coinIcon;
+    private final BufferedImage selectIcon;
+    private final MapSelection mapSelection;
 
     @Inject
-    public UIManager(GameEngine engine, @Width int width, @Height int height) {
+    public UIManager(GameEngine engine, MapSelection mapSelection, @Width int width, @Height int height) {
         setPreferredSize(new Dimension(width, height));
         setMaximumSize(new Dimension(width, height));
         setMinimumSize(new Dimension(width, height));
@@ -34,7 +33,7 @@ public class UIManager extends JPanel {
         this.engine = engine;
         ImageLoader loader = engine.getImageLoader();
 
-        mapSelection = new MapSelection();
+        this.mapSelection = mapSelection;
 
         BufferedImage sprite = loader.loadImage("/sprite.png");
         this.heartIcon = loader.loadImage("/heart-icon.png");
