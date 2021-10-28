@@ -25,15 +25,13 @@ public class UIManager extends JPanel {
     private final MapSelection mapSelection;
 
     @Inject
-    public UIManager(GameEngine engine, MapSelection mapSelection, @Width int width, @Height int height) {
+    public UIManager(GameEngine engine, MapSelection mapSelection, @Width int width, @Height int height, ImageLoader loader) {
+        this.engine = engine;
+        this.mapSelection = mapSelection;
+
         setPreferredSize(new Dimension(width, height));
         setMaximumSize(new Dimension(width, height));
         setMinimumSize(new Dimension(width, height));
-
-        this.engine = engine;
-        ImageLoader loader = engine.getImageLoader();
-
-        this.mapSelection = mapSelection;
 
         BufferedImage sprite = loader.loadImage("/sprite.png");
         this.heartIcon = loader.loadImage("/heart-icon.png");
