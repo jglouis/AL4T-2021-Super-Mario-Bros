@@ -14,6 +14,6 @@ public class MarioMoveRight implements Command {
 
     @Override
     public void execute() {
-        mario.move(false, camera);
+        mario.move(true, camera);
     }
 }
