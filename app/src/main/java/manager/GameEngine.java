@@ -1,5 +1,6 @@
 package manager;
 
+import dagger.Lazy;
 import model.MarioJump;
 import model.MarioMoveLeft;
 import model.MarioMoveRight;
@@ -8,95 +9,95 @@ import view.ImageLoader;
 import view.StartScreenSelection;
 import view.UIManager;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.*;
 import java.awt.*;
 
+@Singleton
 public class GameEngine implements Runnable {
 
     private final static int WIDTH = 1268, HEIGHT = 708;
 
-    private MapManager mapManager;
-    private UIManager uiManager;
-    private SoundManager soundManager;
+    private final MapManager mapManager;
+    @Inject
+    Lazy<UIManager> uiManager;
+    private final SoundManager soundManager;
+    @Inject
+    Lazy<InputManager> inputManager;
+    private final ImageLoader imageLoader;
+
     private GameStatus gameStatus;
     private boolean isRunning;
     private Camera camera;
-    private ImageLoader imageLoader;
     private Thread thread;
     private StartScreenSelection startScreenSelection = StartScreenSelection.START_GAME;
     private int selectedMap = 0;
 
-    private GameEngine() {
-        init();
+    @Inject
+    public GameEngine(Camera camera, MapManager mapManager, SoundManager soundManager, ImageLoader imageLoader) {
+        this.mapManager = mapManager;
+        this.soundManager = soundManager;
+        this.imageLoader = imageLoader;
+        this.camera = camera;
     }
 
-    private void init() {
-        imageLoader = new ImageLoader();
-        InputManager inputManager = new InputManager(this);
+    public synchronized void start() {
+        if (isRunning)
+            return;
+
         gameStatus = GameStatus.START_SCREEN;
-        camera = new Camera();
-        uiManager = new UIManager(this, WIDTH, HEIGHT);
-        soundManager = SoundManager.getInstance();
-        mapManager = new MapManager();
+
 
         JFrame frame = new JFrame("Super Mario Bros.");
-        frame.add(uiManager);
-        frame.addKeyListener(inputManager);
-        frame.addMouseListener(inputManager);
+        frame.add(this.uiManager.get());
+        frame.addKeyListener(inputManager.get());
+        frame.addMouseListener(inputManager.get());
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        start();
-    }
-
-    private synchronized void start() {
-        if (isRunning)
-            return;
-
         isRunning = true;
         thread = new Thread(this);
         thread.start();
     }
 
-    private void reset(){
+    private void reset() {
         resetCamera();
         setGameStatus(GameStatus.START_SCREEN);
     }
 
-    public void resetCamera(){
+    public void resetCamera() {
         camera = new Camera();
         soundManager.restartBackground();
     }
 
     public void selectMapViaMouse() {
-        String path = uiManager.selectMapViaMouse(uiManager.getMousePosition());
+        String path = uiManager.get().selectMapViaMouse(uiManager.get().getMousePosition());
         if (path != null) {
             createMap(path);
         }
     }
 
-    public void selectMapViaKeyboard(){
-        String path = uiManager.selectMapViaKeyboard(selectedMap);
+    public void selectMapViaKeyboard() {
+        String path = uiManager.get().selectMapViaKeyboard(selectedMap);
         if (path != null) {
             createMap(path);
         }
     }
 
-    public void changeSelectedMap(boolean up){
-        selectedMap = uiManager.changeSelectedMap(selectedMap, up);
+    public void changeSelectedMap(boolean up) {
+        selectedMap = uiManager.get().changeSelectedMap(selectedMap, up);
     }
 
     private void createMap(String path) {
         boolean loaded = mapManager.createMap(imageLoader, path);
-        if(loaded){
+        if (loaded) {
             setGameStatus(GameStatus.RUNNING);
             soundManager.restartBackground();
-        }
-
-        else
+        } else
             setGameStatus(GameStatus.START_SCREEN);
     }
 
@@ -121,7 +122,7 @@ public class GameEngine implements Runnable {
             }
             render();
 
-            if(gameStatus != GameStatus.RUNNING) {
+            if (gameStatus != GameStatus.RUNNING) {
                 timer = System.currentTimeMillis();
             }
 
@@ -133,7 +134,7 @@ public class GameEngine implements Runnable {
     }
 
     private void render() {
-        uiManager.repaint();
+        uiManager.get().repaint();
     }
 
     private void gameLoop() {
@@ -146,10 +147,10 @@ public class GameEngine implements Runnable {
         }
 
         int missionPassed = passMission();
-        if(missionPassed > -1){
+        if (missionPassed > -1) {
             mapManager.acquirePoints(missionPassed);
             //setGameStatus(GameStatus.MISSION_PASSED);
-        } else if(mapManager.endLevel())
+        } else if (mapManager.endLevel())
             setGameStatus(GameStatus.MISSION_PASSED);
     }
 
@@ -187,15 +188,12 @@ public class GameEngine implements Runnable {
             } else if (input == ButtonAction.GO_DOWN) {
                 selectOption(false);
             }
-        }
-        else if(gameStatus == GameStatus.MAP_SELECTION){
-            if(input == ButtonAction.SELECT){
+        } else if (gameStatus == GameStatus.MAP_SELECTION) {
+            if (input == ButtonAction.SELECT) {
                 selectMapViaKeyboard();
-            }
-            else if(input == ButtonAction.GO_UP){
+            } else if (input == ButtonAction.GO_UP) {
                 changeSelectedMap(true);
-            }
-            else if(input == ButtonAction.GO_DOWN){
+            } else if (input == ButtonAction.GO_DOWN) {
                 changeSelectedMap(false);
             }
         } else if (gameStatus == GameStatus.RUNNING) {
@@ -218,13 +216,13 @@ public class GameEngine implements Runnable {
             if (input == ButtonAction.PAUSE_RESUME) {
                 pauseGame();
             }
-        } else if(gameStatus == GameStatus.GAME_OVER && input == ButtonAction.GO_TO_START_SCREEN){
+        } else if (gameStatus == GameStatus.GAME_OVER && input == ButtonAction.GO_TO_START_SCREEN) {
             reset();
-        } else if(gameStatus == GameStatus.MISSION_PASSED && input == ButtonAction.GO_TO_START_SCREEN){
+        } else if (gameStatus == GameStatus.MISSION_PASSED && input == ButtonAction.GO_TO_START_SCREEN) {
             reset();
         }
 
-        if(input == ButtonAction.GO_TO_START_SCREEN){
+        if (input == ButtonAction.GO_TO_START_SCREEN) {
             setGameStatus(GameStatus.START_SCREEN);
         }
     }
@@ -249,12 +247,12 @@ public class GameEngine implements Runnable {
         }
     }
 
-    public void shakeCamera(){
+    public void shakeCamera() {
         camera.shakeCamera();
     }
 
     private boolean isGameOver() {
-        if(gameStatus == GameStatus.RUNNING)
+        if (gameStatus == GameStatus.RUNNING)
             return mapManager.isGameOver();
         return false;
     }
@@ -296,10 +294,10 @@ public class GameEngine implements Runnable {
     }
 
     public Point getCameraLocation() {
-        return new Point((int)camera.getX(), (int)camera.getY());
+        return new Point((int) camera.getX(), (int) camera.getY());
     }
 
-    private int passMission(){
+    private int passMission() {
         return mapManager.passMission();
     }
 
@@ -337,10 +335,6 @@ public class GameEngine implements Runnable {
 
     public MapManager getMapManager() {
         return mapManager;
-    }
-
-    public static void main(String... args) {
-        new GameEngine();
     }
 
     public int getRemainingTime() {

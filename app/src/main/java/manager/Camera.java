@@ -1,12 +1,15 @@
 package manager;
 
+import javax.inject.Inject;
+
 public class Camera {
 
     private double x, y;
     private int frameNumber;
     private boolean shaking;
 
-    public Camera(){
+    @Inject
+    public Camera() {
         this.x = 0;
         this.y = 0;
         this.frameNumber = 25;

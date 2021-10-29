@@ -1,15 +1,19 @@
 package view;
 
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+@Singleton
 public class ImageLoader {
 
     private BufferedImage marioForms;
     private BufferedImage brickAnimation;
 
+    @Inject
     public ImageLoader(){
         marioForms = loadImage("/mario-forms.png");
         brickAnimation = loadImage("/brick-animation.png");
@@ -55,8 +59,7 @@ public class ImageLoader {
             col = 4;
             width = 48;
             height = 96;
-        }
-        else if(marioForm == 2){ //fire mario
+        } else if(marioForm == 2){ //fire mario
             col = 7;
             width = 48;
             height = 96;
@@ -77,8 +80,7 @@ public class ImageLoader {
             col = 5;
             width = 48;
             height = 96;
-        }
-        else if(marioForm == 2){ //fire mario
+        } else if(marioForm == 2){ //fire mario
             col = 8;
             width = 48;
             height = 96;

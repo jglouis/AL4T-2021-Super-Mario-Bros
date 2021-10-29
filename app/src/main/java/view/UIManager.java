@@ -1,34 +1,37 @@
 package view;
 
+import di.Height;
+import di.Width;
 import manager.GameEngine;
 import manager.GameStatus;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class UIManager extends JPanel{
+@Singleton
+public class UIManager extends JPanel {
 
-    private GameEngine engine;
+    private final GameEngine engine;
     private Font gameFont;
-    private BufferedImage startScreenImage, aboutScreenImage, helpScreenImage, gameOverScreen;
-    private BufferedImage heartIcon;
-    private BufferedImage coinIcon;
-    private BufferedImage selectIcon;
-    private MapSelection mapSelection;
+    private final BufferedImage startScreenImage, aboutScreenImage, helpScreenImage, gameOverScreen;
+    private final BufferedImage heartIcon;
+    private final BufferedImage coinIcon;
+    private final BufferedImage selectIcon;
+    private final MapSelection mapSelection;
 
-    public UIManager(GameEngine engine, int width, int height) {
+    @Inject
+    public UIManager(GameEngine engine, MapSelection mapSelection, @Width int width, @Height int height, ImageLoader loader) {
+        this.engine = engine;
+        this.mapSelection = mapSelection;
+
         setPreferredSize(new Dimension(width, height));
         setMaximumSize(new Dimension(width, height));
         setMinimumSize(new Dimension(width, height));
-
-        this.engine = engine;
-        ImageLoader loader = engine.getImageLoader();
-
-        mapSelection = new MapSelection();
 
         BufferedImage sprite = loader.loadImage("/sprite.png");
         this.heartIcon = loader.loadImage("/heart-icon.png");
@@ -57,20 +60,15 @@ public class UIManager extends JPanel{
 
         if(gameStatus == GameStatus.START_SCREEN){
             drawStartScreen(g2);
-        }
-        else if(gameStatus == GameStatus.MAP_SELECTION){
+        } else if(gameStatus == GameStatus.MAP_SELECTION){
             drawMapSelectionScreen(g2);
-        }
-        else if(gameStatus == GameStatus.ABOUT_SCREEN){
+        } else if(gameStatus == GameStatus.ABOUT_SCREEN){
             drawAboutScreen(g2);
-        }
-        else if(gameStatus == GameStatus.HELP_SCREEN){
+        } else if(gameStatus == GameStatus.HELP_SCREEN){
             drawHelpScreen(g2);
-        }
-        else if(gameStatus == GameStatus.GAME_OVER){
+        } else if(gameStatus == GameStatus.GAME_OVER){
             drawGameOverScreen(g2);
-        }
-        else {
+        } else {
             Point camLocation = engine.getCameraLocation();
             g2.translate(-camLocation.x, -camLocation.y);
             engine.drawMap(g2);
@@ -83,8 +81,7 @@ public class UIManager extends JPanel{
 
             if(gameStatus == GameStatus.PAUSED){
                 drawPauseScreen(g2);
-            }
-            else if(gameStatus == GameStatus.MISSION_PASSED){
+            } else if(gameStatus == GameStatus.MISSION_PASSED){
                 drawVictoryScreen(g2);
             }
         }

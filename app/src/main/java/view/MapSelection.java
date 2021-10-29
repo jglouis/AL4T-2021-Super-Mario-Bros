@@ -1,13 +1,17 @@
 package view;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.*;
 import java.util.ArrayList;
 
+@Singleton
 public class MapSelection {
 
     private ArrayList<String> maps = new ArrayList<>();
     private MapSelectionItem[] mapSelectionItems;
 
+    @Inject
     public MapSelection(){
         getMaps();
         this.mapSelectionItems = createItems(this.maps);
@@ -82,8 +86,7 @@ public class MapSelection {
                 return mapSelectionItems.length - 1;
             else
                 return index - 1;
-        }
-        else{
+        } else{
             if(index >= mapSelectionItems.length - 1)
                 return 0;
             else
