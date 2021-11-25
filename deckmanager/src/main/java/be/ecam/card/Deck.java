@@ -6,6 +6,12 @@ public class Deck<T extends Comparable<T>> {
 
     // type erasure
     private final List<T> cards = new ArrayList<>();
+    private final DeckShuffler<T> deckShuffler;
+
+    public Deck(DeckShuffler<T> deckShuffler) {
+        this.deckShuffler = deckShuffler;
+    }
+
 
     public T draw() throws NoMoreCardException {
         try {
@@ -16,7 +22,7 @@ public class Deck<T extends Comparable<T>> {
     }
 
     public void shuffle() {
-        Collections.shuffle(cards);
+        deckShuffler.shuffle(cards);
     }
 
     // add(card1, card2, card3)
