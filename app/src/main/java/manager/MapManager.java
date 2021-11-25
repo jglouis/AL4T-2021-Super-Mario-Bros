@@ -10,7 +10,6 @@ import model.hero.Mario;
 import model.prize.BoostItem;
 import model.prize.Coin;
 import model.prize.Prize;
-import view.ImageLoader;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,11 +18,13 @@ import java.util.ArrayList;
 
 @Singleton
 public class MapManager {
-
+    private final MapCreator mapCreator;
     private Map map;
 
     @Inject
-    public MapManager() {}
+    public MapManager(MapCreator mapCreator) {
+        this.mapCreator = mapCreator;
+    }
 
     public void updateLocations() {
         if (map == null)
@@ -36,14 +37,12 @@ public class MapManager {
         Mario mario = getMario();
         mario.resetLocation();
         engine.resetCamera();
-        createMap(engine.getImageLoader(), map.getPath());
+        createMap(map.getPath());
         map.setMario(mario);
     }
 
-    public boolean createMap(ImageLoader loader, String path) {
-        MapCreator mapCreator = new MapCreator(loader);
+    public boolean createMap(String path) {
         map = mapCreator.createMap("/maps/" + path, 400);
-
         return map != null;
     }
 
@@ -255,8 +254,7 @@ public class MapManager {
         ArrayList<Brick> bricks = map.getAllBricks();
 
         for (Prize prize : prizes) {
-            if (prize instanceof BoostItem) {
-                BoostItem boost = (BoostItem) prize;
+            if (prize instanceof BoostItem boost) {
                 Rectangle prizeBottomBounds = boost.getBottomBounds();
                 Rectangle prizeRightBounds = boost.getRightBounds();
                 Rectangle prizeLeftBounds = boost.getLeftBounds();

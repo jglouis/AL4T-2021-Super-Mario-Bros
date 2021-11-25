@@ -93,7 +93,7 @@ public class GameEngine implements Runnable {
     }
 
     private void createMap(String path) {
-        boolean loaded = mapManager.createMap(imageLoader, path);
+        boolean loaded = mapManager.createMap(path);
         if (loaded) {
             setGameStatus(GameStatus.RUNNING);
             soundManager.restartBackground();
@@ -204,7 +204,6 @@ public class GameEngine implements Runnable {
                 new MarioMoveRight(mario, camera).execute();
             } else if (input == ButtonAction.M_LEFT) {
                 new MarioMoveLeft(mario, camera).execute();
-                ;
             } else if (input == ButtonAction.ACTION_COMPLETED) {
                 mario.setVelX(0);
             } else if (input == ButtonAction.FIRE) {

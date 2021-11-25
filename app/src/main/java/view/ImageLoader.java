@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Singleton
-public class ImageLoader {
+public class ImageLoader implements IImageLoader {
 
     private BufferedImage marioForms;
     private BufferedImage brickAnimation;
@@ -24,18 +24,6 @@ public class ImageLoader {
 
         try {
             imageToReturn = ImageIO.read(getClass().getResource("/media" + path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return imageToReturn;
-    }
-
-    public BufferedImage loadImage(File file){
-        BufferedImage imageToReturn = null;
-
-        try {
-            imageToReturn = ImageIO.read(file);
         } catch (IOException e) {
             e.printStackTrace();
         }

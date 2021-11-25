@@ -5,27 +5,31 @@ import model.brick.*;
 import model.enemy.*;
 import model.game.DifficultySettings;
 import model.prize.*;
-import view.ImageLoader;
 import model.Map;
 import model.hero.Mario;
+import view.IImageLoader;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+@Singleton
 class MapCreator {
 
-    private ImageLoader imageLoader;
+    private final IImageLoader imageLoader;
 
-    private BufferedImage backgroundImage;
-    private BufferedImage superMushroom, oneUpMushroom, fireFlower, coin;
-    private BufferedImage ordinaryBrick, surpriseBrick, groundBrick, pipe;
+    private final BufferedImage backgroundImage;
+    private final BufferedImage superMushroom, oneUpMushroom, fireFlower, coin;
+    private final BufferedImage ordinaryBrick, surpriseBrick, groundBrick, pipe;
     private final BufferedImage endFlag;
 
-    private final EnemyFactory enemyFactory;
+    private final IEnemyFactory enemyFactory;
 
     private final DifficultySettings difficultySettings = DifficultySettings.NORMAL;
 
-    MapCreator(ImageLoader imageLoader) {
+    @Inject
+    MapCreator(IImageLoader imageLoader, IEnemyFactory enemyFactory) {
 
         this.imageLoader = imageLoader;
         BufferedImage spriteSheet = imageLoader.loadImage("/sprite.png");
@@ -41,7 +45,7 @@ class MapCreator {
         this.pipe = imageLoader.getSubImage(spriteSheet, 3, 1, 96, 96);
         this.endFlag = imageLoader.getSubImage(spriteSheet, 5, 1, 48, 48);
 
-        enemyFactory = new EnemyFactory(imageLoader, spriteSheet);
+        this.enemyFactory = enemyFactory;
     }
 
     Map createMap(String mapPath, double timeLimit) {
