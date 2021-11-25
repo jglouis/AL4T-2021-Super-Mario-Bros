@@ -254,7 +254,8 @@ public class MapManager {
         ArrayList<Brick> bricks = map.getAllBricks();
 
         for (Prize prize : prizes) {
-            if (prize instanceof BoostItem boost) {
+            if (prize instanceof BoostItem) {
+                BoostItem boost = (BoostItem) prize;
                 Rectangle prizeBottomBounds = boost.getBottomBounds();
                 Rectangle prizeRightBounds = boost.getRightBounds();
                 Rectangle prizeLeftBounds = boost.getLeftBounds();
