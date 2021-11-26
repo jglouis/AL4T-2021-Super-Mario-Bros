@@ -8,7 +8,7 @@ public class DeckTest {
 
 
     private Deck<CardMock> createDummyDeck() {
-        final Deck<CardMock> deck = new Deck<>(new DeckShufflerImpl<CardMock>());
+        final Deck<CardMock> deck = new Deck<>(new DeckShufflerMock<CardMock>());
         for (int i = 1; i <= 10; i++) {
             deck.add(new CardMock(i));
         }
