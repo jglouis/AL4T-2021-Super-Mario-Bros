@@ -4,7 +4,7 @@ import be.ecam.chess.piece.Piece;
 
 /**
  * A 8x8 chess board. It acts like a simple container for {@link Piece}s.
- * One cell can only contain 0 or 1 {@Piece}. It does not implement other chess rules.
+ * One cell can only contain 0 or 1 {@link Piece}. It does not implement other chess rules.
  */
 public class Board {
     private final Piece[][] board;
