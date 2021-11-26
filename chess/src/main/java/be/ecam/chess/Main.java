@@ -1,11 +1,13 @@
 package be.ecam.chess;
 
+import be.ecam.chess.rule.TurnIterator;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Board board = new Board();
-        Game game = new Game(board);
+        Game game = new Game(board, new TurnIterator());
         game.start();
 
         String userInput;

@@ -1,8 +1,8 @@
 package be.ecam.chess;
 
 import be.ecam.chess.piece.*;
+import be.ecam.chess.rule.ITurnIterator;
 import be.ecam.chess.rule.MoveIterator;
-import be.ecam.chess.rule.TurnIterator;
 
 /**
  * the {@link Game} class is responsible for enforcing games rules like
@@ -12,10 +12,11 @@ import be.ecam.chess.rule.TurnIterator;
  */
 public class Game {
     private final IBoard board;
-    private final TurnIterator turnIterator = new TurnIterator();
+    private final ITurnIterator turnIterator;
 
-    public Game(IBoard board) {
+    public Game(IBoard board, ITurnIterator turnIterator) {
         this.board = board;
+        this.turnIterator = turnIterator;
     }
 
     public void start() {
