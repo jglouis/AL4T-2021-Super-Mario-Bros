@@ -11,22 +11,15 @@ import be.ecam.chess.rule.TurnIterator;
  * - player turn alternance.
  */
 public class Game {
-    private Board board;
+    private final IBoard board;
     private final TurnIterator turnIterator = new TurnIterator();
 
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.start();
-        try {
-            game.move(0, 1, 0, 2);
-        } catch (Board.CellException e) {
-            e.printStackTrace();
-        }
+    public Game(IBoard board) {
+        this.board = board;
     }
 
     public void start() {
         turnIterator.reset();
-        board = new Board();
         try {
             board.addPiece(new King(Color.WHITE), 4, 0);
             board.addPiece(new King(Color.BLACK), 4, 7);

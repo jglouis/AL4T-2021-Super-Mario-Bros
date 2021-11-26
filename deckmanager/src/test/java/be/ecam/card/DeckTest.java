@@ -22,13 +22,7 @@ public class DeckTest {
             final CardMock card = deck.draw();
             assertEquals(i, card.getValue());
         }
-        boolean hasRaisedException = false;
-        try {
-            deck.draw(); // should raise an exception
-        } catch (Deck.NoMoreCardException e) {
-            hasRaisedException = true;
-        }
-        assertTrue(hasRaisedException);
+        assertThrows(Deck.NoMoreCardException.class, () -> deck.draw());
     }
 
     @Test

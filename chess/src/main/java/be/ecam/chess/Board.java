@@ -6,7 +6,7 @@ import be.ecam.chess.piece.Piece;
  * A 8x8 chess board. It acts like a simple container for {@link Piece}s.
  * One cell can only contain 0 or 1 {@link Piece}. It does not implement other chess rules.
  */
-public class Board {
+public class Board implements IBoard {
     private final Piece[][] board;
 
     public Board() {
@@ -26,6 +26,7 @@ public class Board {
      * @throws CellIsNotEmptyException if the cell is not empty
      * @throws OutOfBoundException if the cell is out of bound
      */
+    @Override
     public void addPiece(Piece piece, int x, int y) throws CellIsNotEmptyException, OutOfBoundException {
         assertCellInbound(x, y);
         if (board[x][y] != null) {
@@ -40,6 +41,7 @@ public class Board {
      * @param y y coordinate
      * @return the Piece or null if cell is empty
      */
+    @Override
     public Piece getPiece(int x, int y) throws OutOfBoundException {
         assertCellInbound(x, y);
         return board[x][y];
@@ -56,6 +58,7 @@ public class Board {
      * @throws OutOfBoundException if either of the coordinate set is out of bound
      *
      */
+    @Override
     public void move(int fromX, int fromY, int toX, int toY) throws CellIsEmptyException, CellIsNotEmptyException, OutOfBoundException {
         assertCellInbound(fromX, fromY);
         assertCellInbound(toX, toY);
@@ -75,6 +78,7 @@ public class Board {
      * @return the removed {@link Piece} or null if cell was empty
      * @throws OutOfBoundException if the cell is out of bound
      */
+    @Override
     public Piece remove(int x, int y) throws OutOfBoundException {
         assertCellInbound(x, y);
         Piece piece = board[x][y];
@@ -86,48 +90,5 @@ public class Board {
         if (x < 0 || x > 7 || y < 0 || y > 7) {
             throw new OutOfBoundException(x, y);
         }
-    }
-
-    public static class CellException extends Exception {
-        protected final int x;
-        protected final int y;
-
-        public CellException(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    public static class CellIsEmptyException extends CellException {
-        public CellIsEmptyException(int x, int y) {
-            super(x, y);
-        }
-
-        @Override
-        public String getMessage() {
-            return String.format("Cell (%d, %d) is empty", x, y);
-        }
-    }
-
-    public static class CellIsNotEmptyException extends CellException {
-        public CellIsNotEmptyException(int x, int y) {
-            super(x, y);
-        }
-
-        @Override
-        public String getMessage() {
-            return String.format("Cell (%d, %d) is not empty", x, y);
-        }
-    }
-
-    public static class OutOfBoundException extends CellException {
-        public OutOfBoundException(int x, int y) {
-            super(x, y);
-        }
-        @Override
-        public String getMessage() {
-            return String.format("Cell (%d, %d) is out of bound", x, y);
-        }
-
     }
 }
