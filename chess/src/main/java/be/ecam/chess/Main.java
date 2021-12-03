@@ -21,10 +21,12 @@ public class Main {
             switch (command) {
                 case "move":
                     try {
-                        int fromX = Integer.parseInt(arguments[1]);
-                        int fromY = Integer.parseInt(arguments[2]);
-                        int toX = Integer.parseInt(arguments[3]);
-                        int toY = Integer.parseInt(arguments[4]);
+                        int[] from = BoardUtils.humanChessCoordinatesToXY(arguments[1]);
+                        int[] to = BoardUtils.humanChessCoordinatesToXY(arguments[2]);
+                        int fromX = from[0];
+                        int fromY = from[1];
+                        int toX = to[0];
+                        int toY = to[1];
                         game.move(fromX, fromY, toX, toY);
                     } catch (RuntimeException | Board.CellException e) {
                         System.out.println(e.getMessage());
