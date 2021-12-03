@@ -10,7 +10,7 @@ import be.ecam.chess.rule.MoveIterator;
  * - {@link Piece} movement
  * - player turn alternance.
  */
-public class Game {
+public class Game implements IGame {
     private final IBoard board;
     private final ITurnIterator turnIterator;
 
@@ -19,6 +19,7 @@ public class Game {
         this.turnIterator = turnIterator;
     }
 
+    @Override
     public void start() {
         turnIterator.reset();
         try {
@@ -46,6 +47,7 @@ public class Game {
         }
     }
 
+    @Override
     public void move(int fromX, int fromY, int toX, int toY) throws Board.CellException {
         Piece piece = board.getPiece(fromX, fromY);
         if (piece == null) {
