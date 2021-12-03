@@ -32,8 +32,12 @@ public class Game {
             board.addPiece(new Rook(Color.BLACK), 7, 7);
             board.addPiece(new Bishop(Color.WHITE), 2, 0);
             board.addPiece(new Bishop(Color.BLACK), 2, 7);
+            board.addPiece(new Bishop(Color.WHITE), 5, 0);
+            board.addPiece(new Bishop(Color.BLACK), 5, 7);
             board.addPiece(new Knight(Color.WHITE), 1, 0);
             board.addPiece(new Knight(Color.BLACK), 1, 7);
+            board.addPiece(new Knight(Color.WHITE), 6, 0);
+            board.addPiece(new Knight(Color.BLACK), 6, 7);
             for (int i = 0; i < 8; i++) {
                 board.addPiece(new Pawn(Color.WHITE), i, 1);
                 board.addPiece(new Pawn(Color.BLACK), i, 6);
