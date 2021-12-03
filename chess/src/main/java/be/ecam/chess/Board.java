@@ -18,14 +18,6 @@ public class Board implements IBoard {
         }
     }
 
-    /**
-     * Add a {@link Piece} to the board.
-     * @param piece the {@link Piece} to add
-     * @param x x coordinate
-     * @param y y coordinate
-     * @throws CellIsNotEmptyException if the cell is not empty
-     * @throws OutOfBoundException if the cell is out of bound
-     */
     @Override
     public void addPiece(Piece piece, int x, int y) throws CellIsNotEmptyException, OutOfBoundException {
         assertCellInbound(x, y);
@@ -35,29 +27,12 @@ public class Board implements IBoard {
         board[x][y] = piece;
     }
 
-    /**
-     * Return the piece at given coordinates.
-     * @param x x coordinate
-     * @param y y coordinate
-     * @return the Piece or null if cell is empty
-     */
     @Override
     public Piece getPiece(int x, int y) throws OutOfBoundException {
         assertCellInbound(x, y);
         return board[x][y];
     }
 
-    /**
-     * Move a {@link Piece} from one cell to another.
-     * @param fromX origin x coordinate
-     * @param fromY origin y coordinate
-     * @param toX destination x coordinate
-     * @param toY destination y coordinate
-     * @throws CellIsEmptyException if the origin cell is empty
-     * @throws CellIsNotEmptyException if the destination cell is not empty
-     * @throws OutOfBoundException if either of the coordinate set is out of bound
-     *
-     */
     @Override
     public void move(int fromX, int fromY, int toX, int toY) throws CellIsEmptyException, CellIsNotEmptyException, OutOfBoundException {
         assertCellInbound(fromX, fromY);
@@ -71,13 +46,6 @@ public class Board implements IBoard {
         board[fromX][fromY] = null;
     }
 
-    /**
-     * Remove {@link Piece} from the board.
-     * @param x x coordinate
-     * @param y y coordinate
-     * @return the removed {@link Piece} or null if cell was empty
-     * @throws OutOfBoundException if the cell is out of bound
-     */
     @Override
     public Piece remove(int x, int y) throws OutOfBoundException {
         assertCellInbound(x, y);
