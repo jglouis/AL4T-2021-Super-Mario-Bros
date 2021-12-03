@@ -4,6 +4,8 @@ import be.ecam.chess.piece.*;
 import be.ecam.chess.rule.ITurnIterator;
 import be.ecam.chess.rule.MoveIterator;
 
+import java.text.MessageFormat;
+
 /**
  * the {@link Game} class is responsible for enforcing games rules like
  * - Game Setup
@@ -44,6 +46,9 @@ public class Game {
 
     public void move(int fromX, int fromY, int toX, int toY) throws Board.CellException {
         Piece piece = board.getPiece(fromX, fromY);
+        if (piece == null) {
+            throw new RuntimeException("Invalid move: No piece at (" + fromX + ", " + fromY + ").");
+        }
         if (!turnIterator.getCurrentPlayer().equals(piece.getColor())) {
             return;
         }
@@ -53,18 +58,27 @@ public class Game {
             while (true) {
                 int[] step = moveIterator.nextStep();
                 if (step == null) break;
-                if (board.getPiece(step[0], step[1]) != null) {
+                Piece pieceAtStep = board.getPiece(step[0], step[1]);
+                if (pieceAtStep != null) {
+                    boolean wasItAnEnemy = false;
                     if (step[0] == toX && step[1] == toY) {
                         // remove enemy piece, if any
-                        if (board.getPiece(step[0], step[1]).getColor() != piece.getColor()) {
+                        wasItAnEnemy = pieceAtStep.getColor() != piece.getColor();
+                        if (wasItAnEnemy) {
                             board.remove(step[0], step[1]);
                         }
                     }
-                    throw new RuntimeException("Illegal move");
+                    if (!wasItAnEnemy) {
+                        String errorMsg =
+                                String.format(
+                                        "Invalid move: %s piece can't move to (%d,%d). There is a %s piece there.",
+                                        piece.getColor(), step[0], step[1], pieceAtStep.getColor());
+                        throw new RuntimeException(errorMsg);
+                    }
                 }
             }
             board.move(fromX, fromY, toX, toY);
             turnIterator.nextTurn();
-        } else throw new RuntimeException("Illegal move");
+        } else throw new RuntimeException("Illegal move. No valid move iterator found.");
     }
 }

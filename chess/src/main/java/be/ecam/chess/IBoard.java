@@ -32,7 +32,7 @@ public interface IBoard {
         }
     }
 
-    public static class CellIsNotEmptyException extends CellException {
+    class CellIsNotEmptyException extends CellException {
         public CellIsNotEmptyException(int x, int y) {
             super(x, y);
         }
