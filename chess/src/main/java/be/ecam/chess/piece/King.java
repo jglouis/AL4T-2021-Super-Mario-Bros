@@ -15,11 +15,17 @@ public class King extends Piece {
         return new MoveIterator() {
             int currentStep = 0;
             final int[][] steps = new int[][]{{fromX, fromY}, {toX, toY}};
+
             @Override
             public int[] nextStep() {
                 if (this.currentStep >= 1) return null;
                 return this.steps[++this.currentStep];
             }
         };
+    }
+
+    @Override
+    public String toString() {
+        return getColor() == Color.WHITE ? "♔" : "♚";
     }
 }

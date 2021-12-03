@@ -18,6 +18,7 @@ public class Bishop extends Piece {
             private int currentY = fromY;
             private final int xIncr = deltaX > 0 ? 1 : -1;
             private final int yIncr = deltaY > 0 ? 1 : -1;
+
             @Override
             public int[] nextStep() {
                 if (currentX == toX && currentY == toY) return null;
@@ -26,5 +27,10 @@ public class Bishop extends Piece {
                 return new int[]{currentX, currentY};
             }
         };
+    }
+
+    @Override
+    public String toString() {
+        return getColor() == Color.WHITE ? "♗" : "♝";
     }
 }

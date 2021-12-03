@@ -31,4 +31,9 @@ public class Pawn extends Piece {
         // TODO: diagonal attack move
         return null;
     }
+
+    @Override
+    public String toString() {
+        return getColor() == Color.WHITE ? "♙" : "♟";
+    }
 }

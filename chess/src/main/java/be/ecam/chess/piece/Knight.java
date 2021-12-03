@@ -25,6 +25,10 @@ public class Knight extends Piece {
                 }
             };
         } else return null;
+    }
 
+    @Override
+    public String toString() {
+        return getColor() == Color.WHITE ? "♘" : "♞";
     }
 }
