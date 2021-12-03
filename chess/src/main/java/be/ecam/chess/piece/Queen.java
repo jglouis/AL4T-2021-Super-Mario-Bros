@@ -27,7 +27,7 @@ public class Queen extends Piece {
                 if (currentX == toX && currentY == toY) return null;
                 currentX += xIncr;
                 currentY += yIncr;
-                return new int[0];
+                return new int[]{currentX, currentY};
             }
         };
     }
