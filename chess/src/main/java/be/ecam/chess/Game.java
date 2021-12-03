@@ -4,8 +4,6 @@ import be.ecam.chess.piece.*;
 import be.ecam.chess.rule.ITurnIterator;
 import be.ecam.chess.rule.MoveIterator;
 
-import java.text.MessageFormat;
-
 /**
  * the {@link Game} class is responsible for enforcing games rules like
  * - Game Setup
