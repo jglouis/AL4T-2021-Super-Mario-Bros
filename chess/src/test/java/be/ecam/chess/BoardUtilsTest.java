@@ -12,6 +12,11 @@ class BoardUtilsTest {
         assertArrayEquals(new int[]{7, 0}, BoardUtils.humanChessCoordinatesToXY("h1"));
         assertArrayEquals(new int[]{0, 7}, BoardUtils.humanChessCoordinatesToXY("a8"));
         assertArrayEquals(new int[]{7, 7}, BoardUtils.humanChessCoordinatesToXY("h8"));
+
+        assertArrayEquals(new int[]{0, 0}, BoardUtils.humanChessCoordinatesToXY("A1"));
+        assertArrayEquals(new int[]{7, 0}, BoardUtils.humanChessCoordinatesToXY("H1"));
+        assertArrayEquals(new int[]{0, 7}, BoardUtils.humanChessCoordinatesToXY("A8"));
+        assertArrayEquals(new int[]{7, 7}, BoardUtils.humanChessCoordinatesToXY("H8"));
     }
 
     @Test
