@@ -98,7 +98,7 @@ class BoardTest {
     }
 
     @Test
-    void OutOfBoundMsg() throws Board.CellIsNotEmptyException {
+    void outOfBoundMsg() throws Board.CellIsNotEmptyException {
         Board board = new Board();
         Piece mockPiece = new MockPiece(Color.BLACK);
         try {
@@ -109,7 +109,7 @@ class BoardTest {
     }
 
     @Test
-    void CellIsNotEmptyMsg() throws Board.OutOfBoundException {
+    void cellIsNotEmptyMsg() throws Board.OutOfBoundException {
         Board board = new Board();
         Piece mockPiece = new MockPiece(Color.BLACK);
         try {
@@ -121,12 +121,29 @@ class BoardTest {
     }
 
     @Test
-    void CellIsEmptyMsg() throws Board.OutOfBoundException, Board.CellIsNotEmptyException {
+    void cellIsEmptyMsg() throws Board.OutOfBoundException, Board.CellIsNotEmptyException {
         Board board = new Board();
         try {
             board.move(2, 3, 4, 5);
         } catch (Board.CellIsEmptyException e) {
             assertEquals("Cell (2, 3) is empty", e.getMessage());
         }
+    }
+
+    @Test
+    void emptyBoardToString() {
+        Board board = new Board();
+        assertEquals("""
+                  a b c d e f g h
+                1 . . . . . . . .
+                2 . . . . . . . .
+                3 . . . . . . . .
+                4 . . . . . . . .
+                5 . . . . . . . .
+                6 . . . . . . . .
+                7 . . . . . . . .
+                8 . . . . . . . .
+                  a b c d e f g h
+                """, board.toString());
     }
 }

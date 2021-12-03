@@ -59,4 +59,26 @@ public class Board implements IBoard {
             throw new OutOfBoundException(x, y);
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("  a b c d e f g h\n");
+        for (int j = 7; j >= 0; j--) {
+            sb.append(j + 1).append(" ");
+            for (int i = 0; i < 8; i++) {
+                if (board[i][j] == null) {
+                    sb.append(".");
+                } else {
+                    sb.append(board[i][j].toString());
+                }
+                if (i != 7) {
+                    sb.append(" ");
+                }
+            }
+            sb.append("\n");
+        }
+        sb.append("  a b c d e f g h\n");
+        return sb.toString();
+    }
 }

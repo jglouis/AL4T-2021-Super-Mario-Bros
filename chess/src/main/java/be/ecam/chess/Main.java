@@ -14,6 +14,7 @@ public class Main {
         String userInput;
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            System.out.println(board);
             userInput = scanner.nextLine();
             String[] arguments = userInput.split(" ");
             String command = arguments[0];
