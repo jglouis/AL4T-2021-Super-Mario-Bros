@@ -24,6 +24,14 @@ class GameTest {
     }
 
     @Test
+    void move_NoPiece() {
+        MockBoard board = new MockBoard();
+        Game game = new Game(board, new TurnIterator());
+
+        assertThrows(RuntimeException.class, () -> game.move(0, 0, 1, 1));
+    }
+
+    @Test
     void move_Obstructed() throws IBoard.CellIsNotEmptyException, IBoard.OutOfBoundException {
         MockBoard board = new MockBoard();
         MockPiece piece = new MockPiece(Color.WHITE);
