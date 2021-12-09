@@ -10,7 +10,6 @@ public class Main {
 
     public static void main(String[] args) {
         final boolean isUtf8 = args.length >= 1 && args[0].equals("-utf8");
-        Config config = new Config(isUtf8);
 
         Board board = new Board();
         Game game = new Game(board, new TurnIterator());
