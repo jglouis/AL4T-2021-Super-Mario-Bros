@@ -64,6 +64,11 @@ public class MockPiece extends Piece {
 
     @Override
     public String toEmoticon() {
-        return null;
+        return "e";
+    }
+
+    @Override
+    public String toString() {
+        return "s";
     }
 }

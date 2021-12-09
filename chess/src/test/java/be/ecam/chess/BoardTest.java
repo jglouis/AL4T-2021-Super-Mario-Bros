@@ -163,4 +163,42 @@ class BoardTest {
                   a b c d e f g h
                 """, board.toEmoticon());
     }
+
+    @Test
+    void BoardToString() throws IBoard.CellIsNotEmptyException, IBoard.OutOfBoundException {
+        Piece mockPiece = new MockPiece(Color.WHITE);
+        Board board = new Board();
+        board.addPiece(mockPiece, 0, 0);
+        assertEquals("""
+                  a b c d e f g h
+                8 . . . . . . . .
+                7 . . . . . . . .
+                6 . . . . . . . .
+                5 . . . . . . . .
+                4 . . . . . . . .
+                3 . . . . . . . .
+                2 . . . . . . . .
+                1 s . . . . . . .
+                  a b c d e f g h
+                """, board.toString());
+    }
+
+    @Test
+    void BoardToEmoticon() throws IBoard.CellIsNotEmptyException, IBoard.OutOfBoundException {
+        Piece mockPiece = new MockPiece(Color.WHITE);
+        Board board = new Board();
+        board.addPiece(mockPiece, 0, 0);
+        assertEquals("""
+                  a b c d e f g h
+                8 . . . . . . . .
+                7 . . . . . . . .
+                6 . . . . . . . .
+                5 . . . . . . . .
+                4 . . . . . . . .
+                3 . . . . . . . .
+                2 . . . . . . . .
+                1 e . . . . . . .
+                  a b c d e f g h
+                """, board.toEmoticon());
+    }
 }
