@@ -47,6 +47,12 @@ public interface IBoard {
      */
     Piece remove(int x, int y) throws OutOfBoundException;
 
+    /**
+     * Return an emoticon version of the board.
+     * @return the emoticon version of the board
+     */
+    String toEmoticon();
+
     class CellException extends Exception {
         protected final int x;
         protected final int y;

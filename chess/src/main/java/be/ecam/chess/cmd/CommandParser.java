@@ -11,26 +11,30 @@ public class CommandParser {
     private final InputStream inputStream;
     private final IBoard board;
     private final Map<String, Command> commands;
+    private final boolean isUtf8;
 
-    private CommandParser(InputStream inputStream, IBoard board, Map<String, Command> commands) {
+    private CommandParser(InputStream inputStream, IBoard board, Map<String, Command> commands, boolean isUtf8) {
         this.inputStream = inputStream;
         this.board = board;
         this.commands = commands;
+        this.isUtf8 = isUtf8;
     }
 
     public static class Builder {
         private final InputStream inputStream;
         private final IBoard board;
         private final Map<String, Command> commands;
+        private final boolean isUtf8;
 
-        public Builder(InputStream inputStream, IBoard board) {
+        public Builder(InputStream inputStream, IBoard board, boolean isUtf8) {
             this.inputStream = inputStream;
             this.board = board;
+            this.isUtf8 = isUtf8;
             commands = new java.util.HashMap<>();
         }
 
         public CommandParser build() {
-            return new CommandParser(inputStream, board, commands);
+            return new CommandParser(inputStream, board, commands, isUtf8);
         }
 
         public Builder addCommand(String alias, Command command) {
@@ -43,7 +47,11 @@ public class CommandParser {
         Scanner sc = new Scanner(inputStream);
         //noinspection InfiniteLoopStatement
         while (true) {
-            System.out.println(board);
+            if (isUtf8) {
+                System.out.println(board.toEmoticon());
+            } else {
+                System.out.println(board);
+            }
             String line = sc.nextLine();
             String[] args = line.split(" ");
             String command = args[0];

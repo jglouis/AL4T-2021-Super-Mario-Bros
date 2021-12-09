@@ -10,48 +10,60 @@ public class PieceToStringTest {
     @Test
     void testPawn() {
         Piece whitePawn = new Pawn(Color.WHITE);
-        assertEquals("♙", whitePawn.toString());
+        assertEquals("♙", whitePawn.toEmoticon());
+        assertEquals("P", whitePawn.toString());
         Piece blackPawn = new Pawn(Color.BLACK);
-        assertEquals("♟", blackPawn.toString());
+        assertEquals("♟", blackPawn.toEmoticon());
+        assertEquals("p", blackPawn.toString());
     }
 
     @Test
     void testRook() {
         Piece whiteRook = new Rook(Color.WHITE);
-        assertEquals("♖", whiteRook.toString());
+        assertEquals("♖", whiteRook.toEmoticon());
+        assertEquals("R", whiteRook.toString());
         Piece blackRook = new Rook(Color.BLACK);
-        assertEquals("♜", blackRook.toString());
+        assertEquals("♜", blackRook.toEmoticon());
+        assertEquals("r", blackRook.toString());
     }
 
     @Test
     void testKnight() {
         Piece whiteKnight = new Knight(Color.WHITE);
-        assertEquals("♘", whiteKnight.toString());
+        assertEquals("♘", whiteKnight.toEmoticon());
+        assertEquals("N", whiteKnight.toString());
         Piece blackKnight = new Knight(Color.BLACK);
-        assertEquals("♞", blackKnight.toString());
+        assertEquals("♞", blackKnight.toEmoticon());
+        assertEquals("n", blackKnight.toString());
     }
 
     @Test
     void testBishop() {
         Piece whiteBishop = new Bishop(Color.WHITE);
-        assertEquals("♗", whiteBishop.toString());
+        assertEquals("♗", whiteBishop.toEmoticon());
+        assertEquals("B", whiteBishop.toString());
         Piece blackBishop = new Bishop(Color.BLACK);
-        assertEquals("♝", blackBishop.toString());
+        assertEquals("♝", blackBishop.toEmoticon());
+        assertEquals("b", blackBishop.toString());
     }
 
     @Test
     void testKing() {
         Piece whiteKing = new King(Color.WHITE);
-        assertEquals("♔", whiteKing.toString());
+        assertEquals("♔", whiteKing.toEmoticon());
+        assertEquals("K", whiteKing.toString());
         Piece blackKing = new King(Color.BLACK);
-        assertEquals("♚", blackKing.toString());
+        assertEquals("♚", blackKing.toEmoticon());
+        assertEquals("k", blackKing.toString());
     }
 
     @Test
     void testQueen() {
         Piece whiteQueen = new Queen(Color.WHITE);
-        assertEquals("♕", whiteQueen.toString());
+        assertEquals("♕", whiteQueen.toEmoticon());
+        assertEquals("Q", whiteQueen.toString());
         Piece blackQueen = new Queen(Color.BLACK);
-        assertEquals("♛", blackQueen.toString());
+        assertEquals("♛", blackQueen.toEmoticon());
+        assertEquals("q", blackQueen.toString());
     }
 }

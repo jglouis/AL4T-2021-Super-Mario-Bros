@@ -1,7 +1,6 @@
 package be.ecam.chess.piece;
 
 import be.ecam.chess.Color;
-import be.ecam.chess.Main;
 import be.ecam.chess.rule.MoveIterator;
 
 public class Rook extends Piece {
@@ -31,11 +30,12 @@ public class Rook extends Piece {
     }
 
     @Override
+    public String toEmoticon() {
+        return getColor() == Color.WHITE ? "♖" : "♜";
+    }
+
+    @Override
     public String toString() {
-        if (Main.isUtf8) {
-            return getColor() == Color.WHITE ? "♖" : "♜";
-        } else {
-            return getColor() == Color.WHITE ? "R" : "r";
-        }
+        return getColor() == Color.WHITE ? "R" : "r";
     }
 }

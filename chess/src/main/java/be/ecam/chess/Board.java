@@ -61,7 +61,16 @@ public class Board implements IBoard {
     }
 
     @Override
+    public String toEmoticon() {
+        return str(true);
+    }
+
+    @Override
     public String toString() {
+        return str(false);
+    }
+
+    private String str(boolean isUtf8) {
         StringBuilder sb = new StringBuilder();
         sb.append("  a b c d e f g h\n");
         for (int j = 7; j >= 0; j--) {
@@ -70,7 +79,13 @@ public class Board implements IBoard {
                 if (board[i][j] == null) {
                     sb.append(".");
                 } else {
-                    sb.append(board[i][j].toString());
+                    String str;
+                    if (isUtf8) {
+                        str = board[i][j].toEmoticon();
+                    } else {
+                        str = board[i][j].toString();
+                    }
+                    sb.append(str);
                 }
                 if (i != 7) {
                     sb.append(" ");

@@ -24,4 +24,10 @@ public abstract class Piece {
      * @return a {@link MoveIterator} or null if move is impossible
      */
     public abstract MoveIterator getMoveIterator(int fromX, int fromY, int toX, int toY);
+
+    /**
+     * Returns a UTF-8 {@link String} representation of the piece.
+     * @return a UTF-8 {@link String} representation of the piece
+     */
+    public abstract String toEmoticon();
 }

@@ -102,4 +102,9 @@ public class MockBoard implements IBoard {
         throwOutOfBound(x, y);
         return pieces.remove(new Coordinate(x, y));
     }
+
+    @Override
+    public String toEmoticon() {
+        return null;
+    }
 }

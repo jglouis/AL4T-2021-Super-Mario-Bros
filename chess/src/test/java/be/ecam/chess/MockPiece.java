@@ -53,4 +53,9 @@ public class MockPiece extends Piece {
             }
         };
     }
+
+    @Override
+    public String toEmoticon() {
+        return null;
+    }
 }
