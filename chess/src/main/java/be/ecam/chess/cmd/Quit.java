@@ -1,7 +1,5 @@
 package be.ecam.chess.cmd;
 
-import be.ecam.chess.IGame;
-
 public class Quit extends Command {
     public Quit() {
         super(null); // don't need the ref to game here
