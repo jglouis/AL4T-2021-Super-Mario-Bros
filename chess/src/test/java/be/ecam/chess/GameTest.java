@@ -66,4 +66,13 @@ class GameTest {
         assertThrows(RuntimeException.class, () -> game.move(0, 0, 1, 1));
         assertEquals(secondPiece, board.getPiece(1, 1));
     }
+
+    @Test
+    void move_NoValidMoveIteratorFound() throws IBoard.CellIsNotEmptyException, IBoard.OutOfBoundException {
+        MockBoard board = new MockBoard();
+        board.addPiece(new MockPiece(Color.WHITE, true), 0, 0);
+        Game game = new Game(board, new TurnIterator());
+
+        assertThrows(RuntimeException.class, () -> game.move(0, 0, 1, 1));
+    }
 }

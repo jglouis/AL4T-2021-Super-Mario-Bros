@@ -14,9 +14,16 @@ import java.util.List;
  */
 public class MockPiece extends Piece {
     private int[][] intermediatesSteps;
+    private final boolean isMoveIteratorNull;
 
     public MockPiece(Color color) {
         super(color);
+        this.isMoveIteratorNull = false;
+    }
+
+    public MockPiece(Color color, boolean isMoveIteratorNull) {
+        super(color);
+        this.isMoveIteratorNull = true;
     }
 
     /**
@@ -33,6 +40,7 @@ public class MockPiece extends Piece {
 
     @Override
     public MoveIterator getMoveIterator(int fromX, int fromY, int toX, int toY) {
+        if (isMoveIteratorNull) { return null; }
         final int[][] steps;
         if (intermediatesSteps != null) {
             List<int[]> stepsList = new ArrayList<>(intermediatesSteps.length + 2);
