@@ -1,6 +1,7 @@
 package be.ecam.chess.piece;
 
 import be.ecam.chess.Color;
+import be.ecam.chess.Main;
 import be.ecam.chess.rule.MoveIterator;
 
 public class Knight extends Piece {
@@ -29,6 +30,10 @@ public class Knight extends Piece {
 
     @Override
     public String toString() {
-        return getColor() == Color.WHITE ? "♘" : "♞";
+        if (Main.isUtf8) {
+            return getColor() == Color.WHITE ? "♘" : "♞";
+        } else {
+            return getColor() == Color.WHITE ? "N" : "n";
+        }
     }
 }
