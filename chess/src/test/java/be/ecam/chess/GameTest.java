@@ -15,6 +15,13 @@ class GameTest {
     }
 
     @Test
+    void start_IgnoredException() {
+        // This test is only for getting coverage.
+        Game game = new Game(new MockBoard(true), new MockTurnIterator());
+        game.start();
+    }
+
+    @Test
     void move() throws IBoard.CellIsNotEmptyException, IBoard.OutOfBoundException {
         MockBoard board = new MockBoard();
         board.addPiece(new MockPiece(Color.WHITE), 0, 0);
