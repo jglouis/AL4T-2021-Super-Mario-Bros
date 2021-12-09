@@ -57,7 +57,14 @@ public class Game implements IGame {
         if (!turnIterator.getCurrentPlayer().equals(piece.getColor())) {
             return;
         }
-        MoveIterator moveIterator = piece.getMoveIterator(fromX, fromY, toX, toY);
+        // Is there an enemy piece at destination?
+        final boolean isAggressiveMove = board.getPiece(toX, toY) != null && !board.getPiece(toX, toY).getColor().equals(piece.getColor());
+        final MoveIterator moveIterator;
+        if (isAggressiveMove) {
+            moveIterator = piece.getAggressiveMoveIterator(fromX, fromY, toX, toY);
+        } else {
+            moveIterator = piece.getMoveIterator(fromX, fromY, toX, toY);
+        }
         if (moveIterator != null) {
             // Check for each step if the move is valid (no piece in-between)
             while (true) {

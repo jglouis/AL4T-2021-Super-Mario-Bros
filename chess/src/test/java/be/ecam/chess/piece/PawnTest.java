@@ -43,6 +43,29 @@ class PawnTest {
     }
 
     @Test
+    void getAggressiveMoveIteratorWhite() {
+        Piece whitePawn = new Pawn(Color.WHITE);
+        MoveIterator it = whitePawn.getAggressiveMoveIterator(0, 1, 1, 2);
+        assertArrayEquals(new int[]{1, 2}, it.nextStep());
+        assertNull(it.nextStep());
+    }
+
+    @Test
+    void getAggressiveMoveIteratorBlack() {
+        Piece blackPawn = new Pawn(Color.BLACK);
+        MoveIterator it = blackPawn.getAggressiveMoveIterator(0, 6, 1, 5);
+        assertArrayEquals(new int[]{1, 5}, it.nextStep());
+        assertNull(it.nextStep());
+    }
+
+    @Test
+    void getAggressiveMOveIteratorInvalid() {
+        Piece pawn = new Pawn(Color.WHITE);
+        MoveIterator it = pawn.getAggressiveMoveIterator(0, 1, 7, 0);
+        assertNull(it);
+    }
+
+    @Test
     void getMoveIteratorInvalid() {
         Piece pawn = new Pawn(Color.WHITE);
         MoveIterator it = pawn.getMoveIterator(0, 1, 7, 0);

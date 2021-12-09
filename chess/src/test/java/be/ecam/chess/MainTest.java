@@ -19,6 +19,7 @@ class MainTest {
                 move a2 a4
                 move b7 b5
                 move b1 c3
+                move b5 a4
                 quit"""
                 .getBytes(StandardCharsets.UTF_8));
 
