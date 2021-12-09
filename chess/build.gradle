@@ -24,3 +24,7 @@ test {
 application {
     mainClass = 'be.ecam.chess.Main'
 }
+
+run {
+    standardInput = System.in
+}
