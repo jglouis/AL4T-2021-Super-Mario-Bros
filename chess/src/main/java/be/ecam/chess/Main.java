@@ -1,6 +1,9 @@
 package be.ecam.chess;
 
 import be.ecam.chess.cmd.CommandParser;
+import be.ecam.chess.cmd.Move;
+import be.ecam.chess.cmd.Quit;
+import be.ecam.chess.cmd.Start;
 import be.ecam.chess.rule.TurnIterator;
 
 public class Main {
@@ -10,7 +13,12 @@ public class Main {
         Game game = new Game(board, new TurnIterator());
         game.start();
 
-        CommandParser parser = new CommandParser(System.in, game, board);
+        CommandParser parser = new CommandParser.Builder(System.in, board)
+                .addCommand("start", new Start(game))
+                .addCommand("quit", new Quit())
+                .addCommand("move", new Move(game))
+                .build();
+
         parser.start();
     }
 }

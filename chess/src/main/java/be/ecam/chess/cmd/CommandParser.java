@@ -1,27 +1,42 @@
 package be.ecam.chess.cmd;
 
 import be.ecam.chess.IBoard;
-import be.ecam.chess.IGame;
 
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Scanner;
 
 public class CommandParser {
     private final InputStream inputStream;
-
-    private final Start startCommand;
-    private final Quit quitCommand;
-    private final Move moveCommand;
-
     private final IBoard board;
+    private final Map<String, Command> commands;
 
-    public CommandParser(InputStream inputStream, IGame game, IBoard board) {
+    private CommandParser(InputStream inputStream, IBoard board, Map<String, Command> commands) {
         this.inputStream = inputStream;
-        this.startCommand = new Start(game);
         this.board = board;
-        this.quitCommand = new Quit();
-        this.moveCommand = new Move(game);
+        this.commands = commands;
+    }
+
+    public static class Builder {
+        private final InputStream inputStream;
+        private final IBoard board;
+        private final Map<String, Command> commands;
+
+        public Builder(InputStream inputStream, IBoard board) {
+            this.inputStream = inputStream;
+            this.board = board;
+            commands = new java.util.HashMap<>();
+        }
+
+        public CommandParser build() {
+            return new CommandParser(inputStream, board, commands);
+        }
+
+        public Builder addCommand(String alias, Command command) {
+            commands.put(alias, command);
+            return this;
+        }
     }
 
     public void start() {
@@ -33,12 +48,13 @@ public class CommandParser {
             String[] args = line.split(" ");
             String command = args[0];
             args = Arrays.copyOfRange(args, 1, args.length);
-            switch (command) {
-                case "start" -> startCommand.execute(args);
-                case "quit" -> quitCommand.execute(args);
-                case "move" -> moveCommand.execute(args);
-                default -> System.out.printf("Unknown command: %s%n", command);
-            }
+            commands.getOrDefault(command, new Command(null) {
+                @Override
+                void execute(String... args) {
+                    System.out.printf("Unknown command: %s%n", command);
+                }
+            }).execute(args);
+
         }
     }
 }
