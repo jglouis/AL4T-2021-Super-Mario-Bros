@@ -22,6 +22,7 @@ public class Game implements IGame {
     @Override
     public void start() {
         turnIterator.reset();
+        board.clear();
         try {
             board.addPiece(new King(Color.WHITE), 4, 0);
             board.addPiece(new King(Color.BLACK), 4, 7);

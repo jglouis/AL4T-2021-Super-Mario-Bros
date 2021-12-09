@@ -53,6 +53,11 @@ public interface IBoard {
      */
     String toEmoticon();
 
+    /**
+     * Remove all pieces from the board.
+     */
+    void clear();
+
     class CellException extends Exception {
         protected final int x;
         protected final int y;

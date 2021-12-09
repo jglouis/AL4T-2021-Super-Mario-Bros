@@ -54,6 +54,15 @@ public class Board implements IBoard {
         return piece;
     }
 
+    @Override
+    public void clear() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                board[i][j] = null;
+            }
+        }
+    }
+
     private void assertCellInbound(int x, int y) throws OutOfBoundException {
         if (x < 0 || x > 7 || y < 0 || y > 7) {
             throw new OutOfBoundException(x, y);

@@ -107,4 +107,9 @@ public class MockBoard implements IBoard {
     public String toEmoticon() {
         return null;
     }
+
+    @Override
+    public void clear() {
+        pieces.clear();
+    }
 }

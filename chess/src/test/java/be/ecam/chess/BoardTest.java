@@ -98,6 +98,17 @@ class BoardTest {
     }
 
     @Test
+    void clear() throws IBoard.OutOfBoundException {
+        Board board = new Board();
+        board.clear();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                assertNull(board.getPiece(i, j));
+            }
+        }
+    }
+
+    @Test
     void outOfBoundMsg() throws Board.CellIsNotEmptyException {
         Board board = new Board();
         Piece mockPiece = new MockPiece(Color.BLACK);
